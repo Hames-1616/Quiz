@@ -1,8 +1,11 @@
 package com.example.kompose
 
 
+import android.content.Context
 import android.content.res.Configuration
+import android.graphics.drawable.Icon
 import android.nfc.cardemulation.CardEmulation
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -29,18 +32,18 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.outlined.AccountBox
-import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Warning
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.twotone.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -68,6 +71,7 @@ fun port_land() {
                 .fillMaxWidth()
                 .padding(top = 100.dp, bottom = 100.dp, start = 16.dp, end = 16.dp)
                 .border(width = 2.dp, color = Color(160, 82, 45), shape = RoundedCornerShape(8.dp))
+                .verticalScroll(rememberScrollState())
 
         )
 
@@ -171,23 +175,57 @@ fun port_land() {
                     {
                         Text(text = "Message")
                     }
-                   /* var text by rememberSaveable() {
-                        mutableStateOf("")
-                    }*/
-                    var password by rememberSaveable { mutableStateOf("") }
-                    var passwordHidden by rememberSaveable { mutableStateOf(true) }
 
-                    TextField(
-                       /* value = text,
+
+                    //some text
+                    var text by rememberSaveable() {
+                        mutableStateOf("")
+                    }
+                    /*
+                    var password by rememberSaveable { mutableStateOf("") }
+                    var passwordHidden by rememberSaveable { mutableStateOf(true) }*/
+
+                    OutlinedTextField(
+                        value = text,
                         onValueChange = {text=it},
-                        label = {Text("Feedback", textAlign = TextAlign.Center)},
+                        label = {Text("Feedback")},
+                        shape = RoundedCornerShape(200.dp),
                         placeholder = {Text("enter your feedback")},//displaying that hint text
                         singleLine = true,
                         leadingIcon = { Icon(Icons.Filled.Favorite, contentDescription = "fav") },
-                        trailingIcon = { Icon(Icons.Filled.Close,contentDescription = "info") },
+                        trailingIcon = {
+                            IconButton(onClick = {text=""})
+                                {
+                                    val disicon = if(text.isEmpty()) Icons.Outlined.MoreVert else Icons.Filled.Close
+                                    val des = if(text.isEmpty()) null else "data"
+                                    if(text.isNotEmpty())
+                                        Icon(imageVector = disicon, contentDescription = des)
+                                }
+                                       },
                         modifier = Modifier
-                            .layoutId("boxx")*/
-                        value = password,
+                            .layoutId("boxx")
+
+
+                        //
+                    )
+                    val mContext = LocalContext.current
+                    if(text.isNotEmpty())
+                    Button(
+                        onClick = {
+                                    text=""
+                                    mToast(mContext)
+                                  },
+                        modifier = Modifier
+                            .layoutId("submit"),
+                           //Toast.makeText(this,"submitted",Toast.LENGTH_SHORT).show()
+
+                    ) {
+                        Text(
+                            text = "Submit"
+                        )
+                    }
+                    //below textfield code is for password reffer to original compose material webiste for more
+                       /* value = password,
                         onValueChange = { password = it },
                         singleLine = true,
                         label = { Text("Enter password") },
@@ -205,7 +243,7 @@ fun port_land() {
                         }
 
 
-                    )
+                    )*/
 
                 }
             }
@@ -350,6 +388,9 @@ fun prostate(num:String , title:String)
         )
     }
 }
+private fun mToast(context: Context){
+    Toast.makeText(context, "Submitted successfully", Toast.LENGTH_LONG).show()
+}
 //so we will create funtion for portrait and landscape modes
 //but before doing port and land we have to make sure our constraint stay in something like a box
 private fun port(margin:Dp) : ConstraintSet{
@@ -360,7 +401,8 @@ private fun port(margin:Dp) : ConstraintSet{
         val butto1 = createRefFor("butto1")
         val butto2 =createRefFor("butto2")
         val boxx = createRefFor("boxx")
-        val guideline = createGuidelineFromTop(0.15f)
+        val submit = createRefFor("submit")
+        val guideline = createGuidelineFromTop(0.06f)
 
         constrain(image){
             top.linkTo(guideline)
@@ -395,6 +437,11 @@ private fun port(margin:Dp) : ConstraintSet{
             start.linkTo(parent.start,margin=margin)
             end.linkTo(parent.end,margin=margin)
 
+        }
+        constrain(submit){
+            top.linkTo(boxx.bottom,margin=margin)
+            start.linkTo(parent.start,margin=margin)
+            end.linkTo(parent.end,margin=margin)
         }
     }
 }
