@@ -344,7 +344,7 @@ fun port_land() {
 
                     }*/
 
-                    var text by rememberSaveable(){
+                   /* var text by rememberSaveable(){
                         mutableStateOf("")
                     }
 
@@ -355,6 +355,7 @@ fun port_land() {
                         singleLine = true
                     )
 
+                    */
 
 
                 }
