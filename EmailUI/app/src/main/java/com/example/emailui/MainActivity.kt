@@ -53,6 +53,7 @@ fun email() {
 
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val scroll = rememberScrollState()
 // icons to mimic drawer destinations
     val items = listOf(
         menu.Allinboxes,
@@ -81,7 +82,7 @@ fun email() {
         drawerState = drawerState,
         drawerContent =
         {
-            ModalDrawerSheet(modifier = Modifier.verticalScroll(rememberScrollState()))
+            ModalDrawerSheet(modifier = Modifier.verticalScroll(scroll))
             {
                 Column() {
                     Text(
@@ -131,10 +132,11 @@ fun email() {
             Scaffold(
                 topBar = { Homeappbar(drawerState, scope)},
                 bottomBar = { bottom()},
-
+                floatingActionButton = { fab(scroll) }
             )
             {
-                lazy(it)
+                lazy(scroll)
+
             }
         }
     )

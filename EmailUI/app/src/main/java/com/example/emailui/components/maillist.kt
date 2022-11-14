@@ -1,6 +1,9 @@
 package com.example.emailui.components
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,14 +26,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun lazy(padding:PaddingValues)
+fun lazy(scroll:ScrollState)
 {
-    Box(modifier = Modifier.padding(padding))
+    Box()
     {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
+                .padding(top=59.dp)
+                .padding(bottom = 46.dp)
+                .scrollable(scroll, orientation = Orientation.Vertical)
         ){
             items(mock){
                 outline->
