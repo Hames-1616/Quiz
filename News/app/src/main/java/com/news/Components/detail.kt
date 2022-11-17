@@ -2,12 +2,10 @@ package com.news.Components
 
 import android.annotation.SuppressLint
 import android.media.Image
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
@@ -17,7 +15,10 @@ import androidx.compose.material3.SnackbarDefaults.color
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -42,8 +43,13 @@ fun detail(newsdata: newsdata,navController: NavController)
         header(navController)
             Column{
 
-                Image(painter = painterResource(id = newsdata.image), null)
-                Row(
+                Card(modifier = Modifier
+                    .padding(10.dp)
+                    .border(5.dp,MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(20.dp))) {
+                    Image(painter = painterResource(id = newsdata.image), null, modifier = Modifier.padding(6.dp)
+                        .border(1.dp,MaterialTheme.colorScheme.surfaceVariant,RoundedCornerShape(10.dp)))
+                }
+                    Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
@@ -52,8 +58,10 @@ fun detail(newsdata: newsdata,navController: NavController)
                     info(Icons.Filled.Edit,newsdata.author,Icons.Filled.DateRange,newsdata.pusblishedAt)
                 }
                 Card(
-                    modifier = Modifier.fillMaxWidth()
-                        .
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
+
                 ) {
 
                     Text(
@@ -62,7 +70,7 @@ fun detail(newsdata: newsdata,navController: NavController)
                     )
                     Text(
                         text = newsdata.description,
-                        modifier = Modifier.padding(top = 20.dp, start = 4.dp)
+                        modifier = Modifier.padding(top = 20.dp, start = 15.dp, bottom = 20.dp)
                     )
                 }
             }
@@ -76,16 +84,17 @@ fun detail(newsdata: newsdata,navController: NavController)
 fun info(icon : ImageVector , info:String , icone:ImageVector , time:String)
 {
     Box(
-        modifier = Modifier.padding(10.dp)
+        //modifier = Modifier.padding(10.dp)
     )
     {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(2.dp)
                 .requiredHeight(50.dp),
             elevation = CardDefaults.elevatedCardElevation(
                 defaultElevation = 6.dp),
-            shape = RoundedCornerShape(50.dp)
+           // shape = RoundedCornerShape(50.dp)
 
         )
         {

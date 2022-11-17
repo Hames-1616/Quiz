@@ -40,7 +40,7 @@ fun topheader()
                        .fillMaxSize()
             ){
                 Icon(Icons.Filled.Newspaper,null, modifier = Modifier.padding(start=4.dp))
-                Text(text = "Top news",
+                Text(text = "Monuments",
                 modifier = Modifier.weight(2.0f)
                     .padding(start=150.dp))
             }
