@@ -6,13 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.news.Components.navigation
-import com.news.Components.newsapp
-import com.news.Components.top
 import com.news.ui.theme.NewsTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,6 +32,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun news()
 {
+
    navigation()
 }
 

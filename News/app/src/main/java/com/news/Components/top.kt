@@ -33,8 +33,9 @@ fun top(navController: NavController)
        /* Button(onClick = {navController.navigate("detail")}) {
             Text(text = "Go to the detail screen")
         }*/
+
         LazyColumn{
-            items(mockdata.topnewslist)
+            items(mockdata.topnewslist,key={it.id})
             {
                 newsdata ->
 
@@ -77,6 +78,6 @@ fun topnews(newsdata: newsdata,onnewsclick: ()-> Unit = {}) {
                 Spacer(modifier = Modifier.height(10.dp))
             }
         }
+        }
 
-}
 
