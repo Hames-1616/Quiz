@@ -1,5 +1,6 @@
 package com.news.Components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -7,10 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,18 +20,26 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.news.news
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun top(navController: NavController)
 {
+    Scaffold(
+        topBar = { topheader()},
+        bottomBar = {bottom(navController)}
+    ) {
+
+    }
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 69.dp, top = 70.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        topheader()
        /* Button(onClick = {navController.navigate("detail")}) {
             Text(text = "Go to the detail screen")
         }*/
-
         LazyColumn{
             items(mockdata.topnewslist,key={it.id})
             {
@@ -44,6 +50,7 @@ fun top(navController: NavController)
                 })
             }
         }
+
         
     }
 }
