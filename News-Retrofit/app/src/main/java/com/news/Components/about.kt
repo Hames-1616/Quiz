@@ -18,9 +18,4 @@ fun about(navController: NavController)
     Scaffold(
     bottomBar = {bottom(navController)}
     ){}
-    Text(
-        "developed by haamid with love 💘",
-        fontSize = 50.sp,
-        modifier = Modifier.fillMaxWidth()
-        )
 }

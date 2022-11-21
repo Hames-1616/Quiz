@@ -71,7 +71,7 @@ fun NavGraphBuilder.bottom(navController: NavController,articles:List<topnewsart
     }
     composable(bottomnav.Category.route)
     {
-        category(navController,articles[1])
+        category(navController)
     }
     composable(bottomnav.About.route)
     {

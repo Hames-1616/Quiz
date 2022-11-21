@@ -70,3 +70,6 @@ object mockdata {
         return topnewslist.first { it.id == newsid }
     }
 }
+
+
+

@@ -126,7 +126,7 @@ fun info(icon : ImageVector , info:String , icone:ImageVector , time:String)
                 Icon(icone,"date",
                 modifier = Modifier.padding(start=149.dp,end=8.dp))
 
-                Text(text = time, fontSize = 15.sp)
+                Text(text = time, fontSize = 12.sp)
             }
         }
     }
