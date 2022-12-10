@@ -3,6 +3,7 @@ package hames.notes.navigation
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,7 +13,6 @@ import hames.notes.components.edit
 import hames.notes.model.Note
 import hames.notes.screen.NoteViewModel
 import hames.notes.screen.notescreen
-var s : Int = 0
 @Composable
 fun notenavigation(
 
@@ -51,8 +51,8 @@ fun notenavigation(
 }
 
 @Composable
-fun notesapp(viewmodel : NoteViewModel = viewModel())
+fun notesapp(viewmodel : NoteViewModel)
 {
-    val notes = viewmodel.getnotes()
+    val notes = viewmodel.notelist.collectAsState().value
     notenavigation(onAdd = {}, onRemove ={},viewmodel,notes)
 }

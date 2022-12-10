@@ -1,34 +1,48 @@
 package hames.notes.screen
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.lifecycle.HiltViewModel
 import hames.notes.data.notessource
 import hames.notes.model.Note
+import hames.notes.repos.noterepo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+@HiltViewModel
+class NoteViewModel @Inject constructor(private val repository:noterepo) : ViewModel() {
 
-class NoteViewModel : ViewModel() {
-
-   private var notelist = mutableStateListOf<Note>()
+   private val _notelist = MutableStateFlow<List<Note>>(emptyList())
     //live notes
 
+    val notelist = _notelist.asStateFlow()
     init {
-        notelist.addAll(notessource().loadnotes())
-        //loads all the notes data present
+        viewModelScope.launch (Dispatchers.IO){
+            repository.getall().distinctUntilChanged()
+                .collect{
+                    listofnotes ->
+                    if(listofnotes.isNullOrEmpty())
+                    {
+                        Log.d(TAG, "Empty")
+                    }
+                    else
+                        _notelist.value = listofnotes
+                }
+        }
     }
 
-    fun addNote(note: Note)
-    {
-        notelist.add(note)
-        //adds the notelist that we create to the note data
-    }
-    fun removeNote(note: Note)
-    {
-        notelist.remove(note)
-        //removes the notelist that we want to delete from the note data
-    }
+     fun addNote(note: Note) = viewModelScope.launch { repository.addnote(note)}
 
-    fun getnotes() : List<Note>
-    {
-        return notelist
-        //get all the notes that we create
-    }
+     fun updateNote(note: Note) = viewModelScope.launch { repository.update(note)}
+
+     fun removeNote(note: Note) = viewModelScope.launch { repository.delete(note)}
+
 }

@@ -1,11 +1,23 @@
 package hames.notes.model
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.time.Instant
+
 import java.util.*
 
-data class Note (
+@Entity(tableName = "notes_table")
+data class Note @RequiresApi(Build.VERSION_CODES.O) constructor(
+    @PrimaryKey
     val id : UUID = UUID.randomUUID(),
+    @ColumnInfo(name = "notes_title")
     val title : String,
+    @ColumnInfo(name = "notes_description")
     val description : String,
-    val time: Date = Calendar.getInstance().time
+    @ColumnInfo(name = "notes_time")
+    val time: Date = Date.from(Instant.now())
 )

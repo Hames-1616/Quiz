@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import hames.notes.components.fab
+import hames.notes.components.formatdate
 import hames.notes.components.getflag
 import hames.notes.components.top
 import hames.notes.model.Note
@@ -85,7 +86,7 @@ fun notescreen(navController: NavController, notes: List<Note>, onRemove: (Note)
                                 fontSize = 18.sp
                             )
                             Text(
-                                text = note.time.toString(),
+                                text = formatdate(note.time.time),
                                 style = MaterialTheme.typography.labelSmall,
                                 fontSize = 13.sp
                             )
